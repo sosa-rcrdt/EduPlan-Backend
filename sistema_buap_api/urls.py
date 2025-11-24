@@ -1,50 +1,90 @@
-"""point_experts_api URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path
+
+from rest_framework_simplejwt.views import TokenRefreshView
+
 from sistema_buap_api.views import bootstrap
 from sistema_buap_api.views import users
 from sistema_buap_api.views import alumnos
 from sistema_buap_api.views import maestros
 from sistema_buap_api.views import auth
+from sistema_buap_api.views import periodos
+from sistema_buap_api.views import materias
+from sistema_buap_api.views import grupos
+from sistema_buap_api.views import aulas
+from sistema_buap_api.views import horarios
+from sistema_buap_api.views import solicitudes
+from sistema_buap_api.views import reportes
+
 
 urlpatterns = [
-    #Version
-        path('bootstrap/version', bootstrap.VersionView.as_view()),
-    #Create Admin
-        path('admin/', users.AdminView.as_view()),
-    #Admin Data
-        path('lista-admins/', users.AdminAll.as_view()),
-    #Edit Admin
-        path('admins-edit/', users.AdminsViewEdit.as_view()),
-    #Create Alumno
-        path('alumnos/', alumnos.AlumnosView.as_view()),
-    #Alumno Data
-        path('lista-alumnos/', alumnos.AlumnosAll.as_view()),
-    #Edit Alumno
-        path('alumnos-edit/', alumnos.AlumnosViewEdit.as_view()),
-    #Create Maestro
-        path('maestros/', maestros.MaestrosView.as_view()),
-    #Maestro Data
-        path('lista-maestros/', maestros.MaestrosAll.as_view()),
-    #Edit Maestro
-        path('maestros-edit/', maestros.MaestrosViewEdit.as_view()),
-    #Login
-        path('token/', auth.CustomAuthToken.as_view()),
-    #Logout
-        path('logout/', auth.Logout.as_view())
+    # Admins
+    path('admin/', users.AdminView.as_view()),             # GET por id / POST crear admin + user
+    path('lista-admins/', users.AdminAll.as_view()),       # GET lista de admins
+    path('admins-edit/', users.AdminsViewEdit.as_view()),  # GET conteos / PUT / DELETE admin
 
+    # Alumnos
+    path('alumnos/', alumnos.AlumnosView.as_view()),          # GET por id / POST crear alumno + user
+    path('lista-alumnos/', alumnos.AlumnosAll.as_view()),     # GET lista alumnos
+    path('alumnos-edit/', alumnos.AlumnosViewEdit.as_view()), # PUT / DELETE alumno
+
+    # Maestros
+    path('maestros/', maestros.MaestrosView.as_view()),          # GET por id / POST crear maestro + user
+    path('lista-maestros/', maestros.MaestrosAll.as_view()),     # GET lista maestros
+    path('maestros-edit/', maestros.MaestrosViewEdit.as_view()), # PUT / DELETE maestro
+
+    # Perfil del usuario logueado (admin / alumno / maestro)
+    path('profile/me/', users.ProfileView.as_view()),
+
+    # Auth (JWT)
+    path('token/', auth.LoginJWTView.as_view(), name='token_obtain_pair'),  # Login JWT (access + refresh + rol + perfil)
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  # Refresh access token
+    path('logout/', auth.Logout.as_view()),                      # Logout lógico (frontend borra token)
+    path('change-password/', auth.ChangePasswordView.as_view()), # Cambiar contraseña
+
+    # Periodos
+    path('periodos/', periodos.PeriodosAll.as_view()),           # GET lista periodos
+    path('periodo/', periodos.PeriodoView.as_view()),            # GET por id / POST crear periodo
+    path('periodos-edit/', periodos.PeriodosViewEdit.as_view()), # PUT / DELETE periodo
+    path('periodo-activo/', periodos.PeriodoActivoView.as_view()),      # GET periodo activo (público)
+    path('periodo-set-activo/', periodos.PeriodoSetActivoView.as_view()),  # POST marcar periodo activo
+
+    # Materias
+    path('materias/', materias.MateriasAll.as_view()),           # GET lista materias (filtros)
+    path('materia/', materias.MateriaView.as_view()),            # GET por id / POST crear materia
+    path('materias-edit/', materias.MateriasViewEdit.as_view()), # PUT / DELETE materia
+
+    # Grupos
+    path('grupos/', grupos.GruposAll.as_view()),           # GET lista grupos (filtros)
+    path('grupo/', grupos.GrupoView.as_view()),            # GET por id / POST crear grupo
+    path('grupos-edit/', grupos.GruposViewEdit.as_view()), # PUT / DELETE grupo
+    path('grupo-horarios/', grupos.GrupoHorariosView.as_view()), # GET horarios de un grupo
+
+    # Aulas
+    path('aulas/', aulas.AulasAll.as_view()),              # GET lista aulas (filtros)
+    path('aula/', aulas.AulaView.as_view()),               # GET por id / POST crear aula
+    path('aulas-edit/', aulas.AulasViewEdit.as_view()),    # PUT / DELETE aula
+    path('aulas-disponibles/', aulas.AulasDisponiblesView.as_view()), # GET aulas libres para franja
+
+    # Horarios
+    path('horarios/', horarios.HorariosAll.as_view()),        # GET lista / POST crear horario
+    path('horario/', horarios.HorarioView.as_view()),         # GET por id / PUT / DELETE horario
+    path('horarios-docente/', horarios.HorariosDocenteView.as_view()), # GET horarios del docente logueado
+
+    # Solicitudes
+    path('solicitudes/', solicitudes.SolicitudesAll.as_view()),          # GET lista solicitudes (admin)
+    path('solicitud/', solicitudes.SolicitudView.as_view()),             # GET por id / POST crear (docente)
+    path('solicitudes-edit/', solicitudes.SolicitudesViewEdit.as_view()),# PUT / DELETE solicitud
+    path('solicitudes-docente/', solicitudes.SolicitudesDocenteView.as_view()), # GET solicitudes del docente logueado
+    path('solicitud-aprobar/', solicitudes.SolicitudApproveView.as_view()),     # POST aprobar solicitud
+    path('solicitud-rechazar/', solicitudes.SolicitudRejectView.as_view()),     # POST rechazar solicitud
+
+    # Reportes
+    path('reporte-uso-aulas/', reportes.ReporteUsoAulasView.as_view()),           # GET uso de aulas
+    path('reporte-carga-docente/', reportes.ReporteCargaDocenteView.as_view()),   # GET carga por docente
+    path('reporte-grupo/', reportes.ReporteGrupoView.as_view()),                  # GET info grupo + horarios
+    path('reporte-periodo-resumen/', reportes.ReportePeriodoResumenView.as_view()), # GET resumen general periodo
+
+    # Resumen público para landing / home
+    path('public/summary/', reportes.PublicSummaryView.as_view()),
 ]
