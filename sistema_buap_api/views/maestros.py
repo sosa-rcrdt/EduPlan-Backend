@@ -50,7 +50,13 @@ class MaestrosAll(generics.CreateAPIView):
 
 
 class MaestrosView(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    # Define los permisos según el método HTTP
+    def get_permissions(self):
+        # POST (registro) SIN autenticación
+        if self.request.method == "POST":
+            return [permissions.AllowAny()]
+        # GET (ver alumno por id) SÍ requiere token
+        return [permissions.IsAuthenticated()]
 
     # Obtiene la información de un maestro por id
     def get(self, request, *args, **kwargs):
