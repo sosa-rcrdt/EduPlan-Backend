@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sistema_buap_api', '0003_alumnos_maestros'),
+        ('eduplan_api', '0003_alumnos_maestros'),
     ]
 
     operations = [
@@ -70,7 +70,7 @@ class Migration(migrations.Migration):
                 ('cupo_maximo', models.PositiveIntegerField()),
                 ('creation', models.DateTimeField(auto_now_add=True, null=True)),
                 ('update', models.DateTimeField(auto_now=True, null=True)),
-                ('materia', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='grupos', to='sistema_buap_api.materia')),
+                ('materia', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='grupos', to='eduplan_api.materia')),
             ],
             options={
                 'verbose_name': 'Grupo',
@@ -88,8 +88,8 @@ class Migration(migrations.Migration):
                 ('fecha_resolucion', models.DateTimeField(blank=True, null=True)),
                 ('creation', models.DateTimeField(auto_now_add=True, null=True)),
                 ('update', models.DateTimeField(auto_now=True, null=True)),
-                ('docente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='solicitudes_cambio', to='sistema_buap_api.maestros')),
-                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='solicitudes_cambio', to='sistema_buap_api.grupo')),
+                ('docente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='solicitudes_cambio', to='eduplan_api.maestros')),
+                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='solicitudes_cambio', to='eduplan_api.grupo')),
             ],
             options={
                 'verbose_name': 'Solicitud de cambio',
@@ -106,10 +106,10 @@ class Migration(migrations.Migration):
                 ('estado', models.CharField(choices=[('ACTIVO', 'Activo'), ('CANCELADO', 'Cancelado')], default='ACTIVO', max_length=10)),
                 ('creation', models.DateTimeField(auto_now_add=True, null=True)),
                 ('update', models.DateTimeField(auto_now=True, null=True)),
-                ('aula', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='horarios', to='sistema_buap_api.aula')),
-                ('docente', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='horarios', to='sistema_buap_api.maestros')),
-                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='horarios', to='sistema_buap_api.grupo')),
-                ('periodo', models.ForeignKey(help_text='Periodo académico al que pertenece el horario', on_delete=django.db.models.deletion.PROTECT, related_name='horarios', to='sistema_buap_api.periodoacademico')),
+                ('aula', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='horarios', to='eduplan_api.aula')),
+                ('docente', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, related_name='horarios', to='eduplan_api.maestros')),
+                ('grupo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='horarios', to='eduplan_api.grupo')),
+                ('periodo', models.ForeignKey(help_text='Periodo académico al que pertenece el horario', on_delete=django.db.models.deletion.PROTECT, related_name='horarios', to='eduplan_api.periodoacademico')),
             ],
             options={
                 'verbose_name': 'Horario',

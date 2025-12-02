@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from sistema_buap_api.models import *
+from eduplan_api.models import *
 
 
 class UserSerializer(serializers.ModelSerializer):

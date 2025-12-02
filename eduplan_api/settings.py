@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken', # la dejamos aunque ya no uses TokenAuth directamente
     'corsheaders',              # librería CORS
-    'sistema_buap_api',
+    'eduplan_api',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +42,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 CORS_ALLOW_CREDENTIALS = True
 
-ROOT_URLCONF = 'sistema_buap_api.urls'
+ROOT_URLCONF = 'eduplan_api.urls'
 
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
@@ -65,7 +65,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'sistema_buap_api.wsgi.application'
+WSGI_APPLICATION = 'eduplan_api.wsgi.application'
 
 DATABASES = {
     'default': {

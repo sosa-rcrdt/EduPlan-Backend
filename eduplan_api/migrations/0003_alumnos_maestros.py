@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('sistema_buap_api', '0002_administradores_delete_profiles'),
+        ('eduplan_api', '0002_administradores_delete_profiles'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 

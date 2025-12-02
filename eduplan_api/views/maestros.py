@@ -26,8 +26,8 @@ import string
 import random
 import json
 
-from sistema_buap_api.serializers import *
-from sistema_buap_api.models import *
+from eduplan_api.serializers import *
+from eduplan_api.models import *
 
 
 class MaestrosAll(generics.CreateAPIView):

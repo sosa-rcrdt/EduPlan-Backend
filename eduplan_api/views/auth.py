@@ -24,10 +24,10 @@ from datetime import datetime
 import string
 import random
 
-from sistema_buap_api.serializers import (
+from eduplan_api.serializers import (
     CustomTokenObtainPairSerializer,
 )
-from sistema_buap_api.models import *
+from eduplan_api.models import *
 
 
 class LoginJWTView(TokenObtainPairView):

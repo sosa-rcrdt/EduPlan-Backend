@@ -3,18 +3,18 @@ from django.urls import path
 
 from rest_framework_simplejwt.views import TokenRefreshView
 
-from sistema_buap_api.views import bootstrap
-from sistema_buap_api.views import users
-from sistema_buap_api.views import alumnos
-from sistema_buap_api.views import maestros
-from sistema_buap_api.views import auth
-from sistema_buap_api.views import periodos
-from sistema_buap_api.views import materias
-from sistema_buap_api.views import grupos
-from sistema_buap_api.views import aulas
-from sistema_buap_api.views import horarios
-from sistema_buap_api.views import solicitudes
-from sistema_buap_api.views import reportes
+from eduplan_api.views import bootstrap
+from eduplan_api.views import users
+from eduplan_api.views import alumnos
+from eduplan_api.views import maestros
+from eduplan_api.views import auth
+from eduplan_api.views import periodos
+from eduplan_api.views import materias
+from eduplan_api.views import grupos
+from eduplan_api.views import aulas
+from eduplan_api.views import horarios
+from eduplan_api.views import solicitudes
+from eduplan_api.views import reportes
 
 
 urlpatterns = [
