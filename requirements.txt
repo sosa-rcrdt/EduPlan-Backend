@@ -9,3 +9,4 @@ django-rest-auth
 cryptography
 python-dateutil
 google-cloud-storage
+djangorestframework-simplejwt
