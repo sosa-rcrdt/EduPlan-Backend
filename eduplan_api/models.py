@@ -198,7 +198,6 @@ class Horario(models.Model):
     def __str__(self):
         return f"{self.grupo} - {self.get_dia_semana_display()} {self.hora_inicio}-{self.hora_fin}"
 
-
 class SolicitudCambio(models.Model):
     ESTADO_CHOICES = (
         ("PENDIENTE", "Pendiente"),
@@ -207,17 +206,44 @@ class SolicitudCambio(models.Model):
     )
 
     id = models.BigAutoField(primary_key=True)
+
     docente = models.ForeignKey(
-        Maestros, on_delete=models.CASCADE, related_name="solicitudes_cambio"
+        Maestros,
+        on_delete=models.CASCADE,
+        related_name="solicitudes_cambio",
     )
+
     grupo = models.ForeignKey(
-        Grupo, on_delete=models.CASCADE, related_name="solicitudes_cambio"
+        Grupo,
+        on_delete=models.CASCADE,
+        related_name="solicitudes_cambio",
     )
-    fecha_propuesta = models.DateField()
+
+    dia_semana_propuesto = models.IntegerField(
+        choices=Horario.DIA_CHOICES,
+        null=True,
+        blank=True,
+        help_text="Día de la semana propuesto para el nuevo horario",
+    )
+    hora_inicio_propuesta = models.TimeField(
+        null=True,
+        blank=True,
+        help_text="Hora de inicio propuesta para el nuevo horario",
+    )
+    hora_fin_propuesta = models.TimeField(
+        null=True,
+        blank=True,
+        help_text="Hora de fin propuesta para el nuevo horario",
+    )
+
     motivo = models.TextField()
+
     estado = models.CharField(
-        max_length=10, choices=ESTADO_CHOICES, default="PENDIENTE"
+        max_length=10,
+        choices=ESTADO_CHOICES,
+        default="PENDIENTE",
     )
+
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_resolucion = models.DateTimeField(null=True, blank=True)
 
@@ -230,3 +256,45 @@ class SolicitudCambio(models.Model):
 
     def __str__(self):
         return f"Solicitud {self.id} - {self.docente} - {self.grupo} ({self.estado})"
+
+class Inscripcion(models.Model):
+    ESTADO_CHOICES = (
+        ("ACTIVA", "Activa"),
+        ("BAJA", "Baja"),
+    )
+
+    id = models.BigAutoField(primary_key=True)
+
+    alumno = models.ForeignKey(
+        Alumnos,
+        on_delete=models.CASCADE,
+        related_name="inscripciones",
+    )
+    grupo = models.ForeignKey(
+        Grupo,
+        on_delete=models.CASCADE,
+        related_name="inscripciones",
+    )
+    periodo = models.ForeignKey(
+        PeriodoAcademico,
+        on_delete=models.PROTECT,
+        related_name="inscripciones",
+    )
+
+    estado = models.CharField(
+        max_length=10,
+        choices=ESTADO_CHOICES,
+        default="ACTIVA",
+    )
+
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Inscripción"
+        verbose_name_plural = "Inscripciones"
+        # Evitar duplicados del mismo alumno en el mismo grupo y periodo
+        unique_together = ("alumno", "grupo", "periodo")
+
+    def __str__(self):
+        return f"Inscripción alumno {self.alumno_id} - grupo {self.grupo_id} - periodo {self.periodo_id}"

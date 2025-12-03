@@ -100,4 +100,35 @@ class HorarioSerializer(serializers.ModelSerializer):
 class SolicitudCambioSerializer(serializers.ModelSerializer):
     class Meta:
         model = SolicitudCambio
-        fields = '__all__'
+        fields = "__all__"
+
+    def validate(self, attrs):
+        """
+        Valida que hora_inicio_propuesta < hora_fin_propuesta.
+        Soporta tanto creación como actualización parcial.
+        """
+        instance = getattr(self, "instance", None)
+
+        hora_inicio = attrs.get(
+            "hora_inicio_propuesta",
+            getattr(instance, "hora_inicio_propuesta", None),
+        )
+        hora_fin = attrs.get(
+            "hora_fin_propuesta",
+            getattr(instance, "hora_fin_propuesta", None),
+        )
+
+        if hora_inicio and hora_fin and hora_inicio >= hora_fin:
+            raise serializers.ValidationError(
+                {
+                    "hora_inicio_propuesta": "La hora de inicio debe ser menor que la hora de fin.",
+                    "hora_fin_propuesta": "La hora de fin debe ser mayor que la hora de inicio.",
+                }
+            )
+
+        return attrs
+
+class InscripcionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Inscripcion
+        fields = "__all__"

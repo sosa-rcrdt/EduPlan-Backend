@@ -15,6 +15,7 @@ from eduplan_api.views import aulas
 from eduplan_api.views import horarios
 from eduplan_api.views import solicitudes
 from eduplan_api.views import reportes
+from eduplan_api.views import inscripciones
 
 
 urlpatterns = [
@@ -87,4 +88,11 @@ urlpatterns = [
 
     # Resumen público para landing / home
     path('public/summary/', reportes.PublicSummaryView.as_view()),
+
+    # Inscripciones (Alumno–Grupo–Periodo)
+    path('inscripciones/', inscripciones.InscripcionesAll.as_view()),              # GET lista inscripciones (filtros)
+    path('inscripcion/', inscripciones.InscripcionView.as_view()),                 # GET por id / POST crear inscripción
+    path('inscripciones-edit/', inscripciones.InscripcionesViewEdit.as_view()),    # PUT / DELETE inscripción
+    path('inscripciones-alumno/', inscripciones.InscripcionesAlumnoView.as_view()),# GET carga académica del alumno logueado
+
 ]
