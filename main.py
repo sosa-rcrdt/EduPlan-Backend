@@ -1,4 +1,4 @@
-from sistema_buap_api.wsgi import application
+from eduplan_api.wsgi import application
 
 # App Engine by default looks for a main.py file at the root of the app
 # directory with a WSGI-compatible object called app.
