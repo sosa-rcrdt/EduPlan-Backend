@@ -40,10 +40,11 @@ MIDDLEWARE = [
 ]
 
 # Configuración de CORS: orígenes permitidos
-CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:4200',
-# ]
+# CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:4200',
+    'https://edu-plan-frontend.vercel.app',
+]
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'eduplan_api.urls'
