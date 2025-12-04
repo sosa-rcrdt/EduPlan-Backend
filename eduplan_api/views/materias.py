@@ -28,7 +28,7 @@ from eduplan_api.models import *
 
 
 class MateriasAll(generics.CreateAPIView):
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
 
     # Devuelve el listado de materias (permite filtrar por área y búsqueda)
     def get(self, request, *args, **kwargs):

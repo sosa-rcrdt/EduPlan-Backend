@@ -42,9 +42,10 @@ class MaestrosAll(generics.CreateAPIView):
             return Response({}, 400)
 
         for maestro in maestros:
-            maestro["materias_json"] = json.loads(
-                maestro["materias_json"]
-            )  # convierte el string JSON a estructura Python
+            if maestro["materias_json"]:
+                maestro["materias_json"] = json.loads(maestro["materias_json"])
+            else:
+                maestro["materias_json"] = []
 
         return Response(maestros, 200)
 
@@ -62,9 +63,10 @@ class MaestrosView(generics.CreateAPIView):
     def get(self, request, *args, **kwargs):
         maestro = get_object_or_404(Maestros, id=request.GET.get("id"))
         maestro = MaestroSerializer(maestro, many=False).data
-        maestro["materias_json"] = json.loads(
-            maestro["materias_json"]
-        )  # convierte el string JSON a estructura Python
+        if maestro["materias_json"]:
+            maestro["materias_json"] = json.loads(maestro["materias_json"])
+        else:
+            maestro["materias_json"] = []
         return Response(maestro, 200)
 
     # Registra un nuevo maestro y su usuario asociado
