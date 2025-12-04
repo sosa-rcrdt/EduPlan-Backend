@@ -16,6 +16,7 @@ from eduplan_api.views import horarios
 from eduplan_api.views import solicitudes
 from eduplan_api.views import reportes
 from eduplan_api.views import inscripciones
+from eduplan_api.views import notificaciones
 
 
 urlpatterns = [
@@ -95,4 +96,6 @@ urlpatterns = [
     path('inscripciones-edit/', inscripciones.InscripcionesViewEdit.as_view()),    # PUT / DELETE inscripción
     path('inscripciones-alumno/', inscripciones.InscripcionesAlumnoView.as_view()),# GET carga académica del alumno logueado
 
+    # Notificaciones
+    path('notificaciones/', notificaciones.NotificacionesView.as_view()),
 ]
