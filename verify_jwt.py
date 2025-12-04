@@ -43,11 +43,11 @@ def verify_jwt():
     print("   Success! Refreshed token.")
 
     # 4. Blacklist Token (Logout)
-    # If rotation is on, the old refresh token might already be blacklisted?
-    # Let's try to blacklist the NEW refresh token to simulate logout.
     print("3. Blacklisting Token (Logout)...")
     token_to_blacklist = new_refresh if new_refresh else refresh
-    response = requests.post(f'{BASE_URL}/token/blacklist/', data={'refresh': token_to_blacklist})
+    # The Logout view expects 'refresh_token' in the body
+    response = requests.post(f'{BASE_URL}/logout/', data={'refresh_token': token_to_blacklist}, headers={'Authorization': f'Bearer {new_access}'})
+    
     if response.status_code != 200:
         print(f"Failed to blacklist token: {response.text}")
         return False
@@ -56,7 +56,9 @@ def verify_jwt():
     # 5. Verify Blacklist
     print("4. Verifying Blacklist (Trying to refresh with blacklisted token)...")
     response = requests.post(f'{BASE_URL}/token/refresh/', data={'refresh': token_to_blacklist})
-    if response.status_code == 401: # Unauthorized
+    
+    # Expecting 401 Unauthorized because the token is blacklisted
+    if response.status_code == 401: 
         print("   Success! Blacklisted token was rejected.")
         return True
     else:

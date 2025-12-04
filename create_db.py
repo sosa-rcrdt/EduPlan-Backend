@@ -6,8 +6,8 @@ def create_db(password):
         print(f"Connecting with password: '{password}'...")
         conn = pymysql.connect(host='127.0.0.1', port=3307, user='root', password=password, charset='utf8mb4')
         cursor = conn.cursor()
-        print("Creating database 'sistema_buap_db'...")
-        cursor.execute("CREATE DATABASE IF NOT EXISTS sistema_buap_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
+        print("Creating database 'eduplan_bd'...")
+        cursor.execute("CREATE DATABASE IF NOT EXISTS eduplan_bd CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;")
         print("Database created successfully!")
         conn.close()
         return True

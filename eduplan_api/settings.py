@@ -20,7 +20,6 @@ INSTALLED_APPS = [
 
     'django_filters',           # necesarios para los filtros de DRF
     'rest_framework',
-<<<<<<< HEAD:sistema_buap_api/settings.py
     'rest_framework.authtoken',       # conserva soporte de tokens de DRF
     'corsheaders',                    # librería CORS actualizada
     'rest_framework_simplejwt',

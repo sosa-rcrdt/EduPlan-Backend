@@ -35,12 +35,20 @@ class LoginJWTView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
 
+from rest_framework_simplejwt.tokens import RefreshToken
+
 class Logout(generics.GenericAPIView):
     permission_classes = (permissions.IsAuthenticated,)
 
-    # Logout lógico: el frontend debe borrar el token
-    def get(self, request, *args, **kwargs):
-        return Response({"logout": True}, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        try:
+            refresh_token = request.data.get("refresh_token")
+            if refresh_token:
+                token = RefreshToken(refresh_token)
+                token.blacklist()
+            return Response({"logout": True}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"details": str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ChangePasswordView(generics.GenericAPIView):
