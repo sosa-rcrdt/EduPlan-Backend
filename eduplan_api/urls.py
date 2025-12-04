@@ -1,5 +1,6 @@
 from django.contrib import admin
 from django.urls import path
+from django.http import JsonResponse
 
 from rest_framework_simplejwt.views import TokenRefreshView
 
@@ -20,6 +21,7 @@ from eduplan_api.views import notificaciones
 
 
 urlpatterns = [
+    path('', lambda request: JsonResponse({'status': 'ok', 'message': 'API is running'})),
     # Admins
     path('admin/', users.AdminView.as_view()),             # GET por id / POST crear admin + user
     path('lista-admins/', users.AdminAll.as_view()),       # GET lista de admins
