@@ -8,7 +8,7 @@ SECRET_KEY = '-_&+lsebec(whhw!%n@ww&1j=4-^j_if9x8$q778+99oz&!ms2'
 
 DEBUG = True  # en desarrollo
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -29,6 +29,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',     # CORS debe ir antes de CommonMiddleware
     'django.middleware.common.CommonMiddleware',
@@ -49,7 +50,15 @@ ROOT_URLCONF = 'eduplan_api.urls'
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+ALLOWED_HOSTS = ["*"]
+
+# ... (INSTALLED_APPS and MIDDLEWARE are handled separately)
+
+# ...
+
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 TEMPLATES = [
     {
@@ -72,8 +81,12 @@ WSGI_APPLICATION = 'eduplan_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'railway',
+        'USER': 'root',
+        'PASSWORD': 'ISaQmNOtHFyUiWvFpEwKRkZtBRfQTHdK',
+        'HOST': 'switchyard.proxy.rlwy.net',
+        'PORT': '47733',
         'OPTIONS': {
-            'read_default_file': os.path.join(BASE_DIR, "my.cnf"),
             'charset': 'utf8mb4',
         }
     }

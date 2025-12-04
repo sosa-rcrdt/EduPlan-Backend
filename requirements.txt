@@ -10,3 +10,5 @@ cryptography
 python-dateutil
 google-cloud-storage
 djangorestframework-simplejwt
+gunicorn
+whitenoise
