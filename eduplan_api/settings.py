@@ -40,9 +40,10 @@ MIDDLEWARE = [
 ]
 
 # Configuración de CORS: orígenes permitidos
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:4200',
-]
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:4200',
+# ]
 CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'eduplan_api.urls'
