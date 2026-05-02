@@ -41,9 +41,16 @@ MIDDLEWARE = [
 
 # Configuración de CORS: orígenes permitidos
 # CORS_ALLOW_ALL_ORIGINS = True
+
+# Configuración de Producción (Vercel)
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:4200',
+#     'https://edu-plan-frontend.vercel.app',
+# ]
+
+# Configuración Local
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:4200',
-    'https://edu-plan-frontend.vercel.app',
 ]
 CORS_ALLOW_CREDENTIALS = True
 
@@ -83,11 +90,11 @@ WSGI_APPLICATION = 'eduplan_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
+        'NAME': 'eduplan_bd',
         'USER': 'root',
-        'PASSWORD': 'ISaQmNOtHFyUiWvFpEwKRkZtBRfQTHdK',
-        'HOST': 'switchyard.proxy.rlwy.net',
-        'PORT': '47733',
+        'PASSWORD': '',
+        'HOST': '127.0.0.1',
+        'PORT': '3307',
         'OPTIONS': {
             'charset': 'utf8mb4',
         }

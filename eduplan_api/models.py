@@ -336,3 +336,21 @@ class Notificacion(models.Model):
 
     def __str__(self):
         return f"Notificación para {self.usuario.username}: {self.mensaje[:20]}..."
+
+class Noticia(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    titulo = models.CharField(max_length=255)
+    texto = models.TextField()
+    foto = models.ImageField(upload_to='noticias/', null=True, blank=True)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    
+    creation = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+    update = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Noticia"
+        verbose_name_plural = "Noticias"
+        ordering = ["-fecha_creacion"]
+
+    def __str__(self):
+        return f"{self.titulo}"

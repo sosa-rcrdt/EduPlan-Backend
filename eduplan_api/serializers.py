@@ -138,3 +138,8 @@ class NotificacionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notificacion
         fields = "__all__"
+
+class NoticiaSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Noticia
+        fields = "__all__"

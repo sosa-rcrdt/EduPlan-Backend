@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path
 from django.http import JsonResponse
 
@@ -18,6 +20,7 @@ from eduplan_api.views import solicitudes
 from eduplan_api.views import reportes
 from eduplan_api.views import inscripciones
 from eduplan_api.views import notificaciones
+from eduplan_api.views import noticias
 
 
 urlpatterns = [
@@ -100,4 +103,12 @@ urlpatterns = [
 
     # Notificaciones
     path('notificaciones/', notificaciones.NotificacionesView.as_view()),
+
+    # Noticias
+    path('noticias/', noticias.NoticiasAll.as_view()),
+    path('noticia/', noticias.NoticiaView.as_view()),
+    path('noticias-edit/', noticias.NoticiasViewEdit.as_view()),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
